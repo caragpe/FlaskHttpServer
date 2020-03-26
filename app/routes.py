@@ -12,9 +12,19 @@ def handle_invalid_usage(error):
 
 @app.route('/echo')
 def echo():
+    ECHO_MESSAGE_PARAM = 'message'
     if request.method != 'GET':
         raise InvalidUsage('METHOD NOT ALLOWED', 405)
-    pass
+    string_params = dict(request.args)
+    if len(string_params) != 1:
+        raise InvalidUsage('NOT ACCEPTABLE', 406)
+    content_param = request.args.get(ECHO_MESSAGE_PARAM)
+    if content_param:
+        return content_param
+    else:
+        raise InvalidUsage('NOT ACCEPTABLE', 406)
+    # for (param_name, value) in string_params.items():
+    #     print('Received: {} => {}'.format(param_name, value))
 
 
 @app.route('/set_banner', methods=['POST'])
