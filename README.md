@@ -6,7 +6,6 @@
 
 #### Creating a virtual environment
 
-Virtual Env
 ```
 python3 -m venv venv
 # Python3 is installed in /usr/local/bin/python3
@@ -16,24 +15,32 @@ source venv/bin/activate
 # To deactivate it, just type `deactivate`
 ```
 
-Main dependencies
+#### Main dependencies
 ```shell script
 pip install flask
 pip install flask-sqlalchemy
 pip install flask-migrate
 ```
 
+#### Export app name
 ```shell script
 export FLASK_APP=set_banner_service.py
 ```
 
-Migrations
+#### Migrations
 ```shell script
 flask db migrate -m "Message about this migration"
 flask db upgrade
 ```
 
-Running the server on 8081
+#### Running the server on 8081
 ```shell script
 flask run -p 8081
+```
+
+#### Testing
+
+First, install `pytest`
+```shell script
+pip install pytest
 ```
