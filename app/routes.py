@@ -23,8 +23,6 @@ def echo():
         return content_param
     else:
         raise InvalidUsage('NOT ACCEPTABLE', 406)
-    # for (param_name, value) in string_params.items():
-    #     print('Received: {} => {}'.format(param_name, value))
 
 
 @app.route('/set_banner', methods=['POST'])
