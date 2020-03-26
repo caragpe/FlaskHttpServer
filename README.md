@@ -24,7 +24,7 @@ pip install flask-migrate
 
 #### Export app name
 ```shell script
-export FLASK_APP=set_banner_service.py
+export FLASK_APP=server.py
 ```
 
 #### Migrations
@@ -42,5 +42,10 @@ flask run -p 8081
 
 First, install `pytest`
 ```shell script
-pip install pytest
+pip install -U pytest
+```
+
+To run the tests:
+```shell script
+python -m pytest tests/
 ```
