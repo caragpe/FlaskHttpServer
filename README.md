@@ -24,11 +24,16 @@ pip install flask-migrate
 ```
 
 ```shell script
-export FLASK_APP=server.py
+export FLASK_APP=set_banner_service.py
 ```
 
 Migrations
 ```shell script
 flask db migrate -m "Message about this migration"
 flask db upgrade
+```
+
+Running the server on 8081
+```shell script
+flask run -p 8081
 ```
