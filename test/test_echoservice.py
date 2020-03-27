@@ -1,8 +1,8 @@
 import pytest
-from server import app
+from app import app
 
 
-class TestEcho:
+class TestEchoService:
     def test_basic_echo(self):
         with app.test_client() as c:
             rv = c.get('/echo?message=Hello')
@@ -25,4 +25,5 @@ class TestEcho:
         with app.test_client() as c:
             rv = c.post('/echo?message=Hello&from=Carlos')
             assert rv.status_code == 405
-            # assert b'Method not allowed' in rv.data
+            print(rv.data)
+            # assert b'Method not allowed' in rv.data/
