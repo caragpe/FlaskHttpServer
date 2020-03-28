@@ -1,6 +1,4 @@
-# README
-
-## FlaskHttpServer
+# FlaskHttpServer
 
 ### Setting up the project
 
