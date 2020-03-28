@@ -1,5 +1,5 @@
 from app import app
-from flask import request, jsonify
+from flask import request, jsonify, Response
 from app.errors import InvalidUsage
 
 
@@ -27,6 +27,21 @@ def echo():
 
 @app.route('/set_banner', methods=['POST'])
 def set_banner():
+    SET_BANNER_PARAM = 'banner'
     if request.method != 'POST':
         raise InvalidUsage('METHOD NOT ALLOWED', 405)
-    pass
+    headers = request.headers
+    if "admin-auth" not in headers:
+        # Review if should be Forbidden
+        raise InvalidUsage('METHOD NOT ALLOWED', 403)
+    if headers['admin-auth'] != '3344':
+        # Review if should be Forbidden
+        raise InvalidUsage('METHOD NOT ALLOWED', 403)
+    string_params = dict(request.args)
+    if len(string_params) != 1:
+        raise InvalidUsage('NOT ACCEPTABLE', 406)
+    content_param = request.args.get(SET_BANNER_PARAM)
+    if content_param:
+        return Response(status=200)
+    else:
+        raise InvalidUsage('NOT ACCEPTABLE', 406)
