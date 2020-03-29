@@ -30,11 +30,11 @@ export FLASK_APP=server.py
 
 ### Migrations
 ```shell script
-flask db migrate -m "Message about this migration"
+flask db migrate -m "Initial migration message"
 flask db upgrade
 ```
 
-### Running the server on 8081
+### Running the server on port 8081
 ```shell script
 flask run -p 8081
 ```
@@ -56,7 +56,7 @@ curl -v -X GET http://127.0.0.1:8081/echo?message={message_here}
 curl -v -X POST -H "admin-auth: 3344" http://127.0.0.1:8081/set_banner?banner={header_banner_here}
 ```
 
-#### Echo endpoint
+#### /echo endpoint
 The `/echo` endpoint accepts exclusively `GET` requests and accepts a single parameter `message`.
 - If no message is passed or any additional parameter is given, it should return:
 `406 NOT ACCEPTABLE`.
@@ -65,10 +65,19 @@ ALLOWED`
 - If the request is fine, the response should contain the message passed in the
 request.
 
-#### SetBanner endpoint
+#### /setbanner endpoint
 The `/setbanner` endpoint should accept a `POST` request with a single parameter `banner` in the `POST` body.
-- The request should be authenticated with a PIN code set in the headers. The correct pin is 3344 and header name is `admin-auth`
+- The request should be authenticated with a PIN code set in the headers. The correct pin is `3344` and header name is `admin-auth`
 - If authentication fails it should return: `403 METHOD NOT ALLOWED`
 - If the request is right, response should be empty.
 - After a correct setting, banner should be returned in the header in all further
 responses to the `/echo` endpoint.
+
+
+### ToDo's
+- Create a test database
+- Create a test class for the Banner repository
+- Mock database in the command/service test classes
+- Refine correct naming/description of errors
+- Create a config file with constants used across the app
+- TBD
