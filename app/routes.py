@@ -1,6 +1,7 @@
-from app import app
+from app import app, db
 from flask import request, jsonify, Response
 from app.errors import InvalidUsage
+from app.models import Banner
 
 
 @app.errorhandler(InvalidUsage)
@@ -18,9 +19,16 @@ def echo():
     string_params = dict(request.args)
     if len(string_params) != 1:
         raise InvalidUsage('NOT ACCEPTABLE', 406)
-    content_param = request.args.get(ECHO_MESSAGE_PARAM)
-    if content_param:
-        return content_param
+    message = request.args.get(ECHO_MESSAGE_PARAM)
+    if message:
+        last_banner_in_db = db.session \
+            .query(Banner) \
+            .order_by(Banner.id.desc()) \
+            .first()
+        response = Response(message)
+        if last_banner_in_db:
+            response.headers['banner'] = last_banner_in_db.banner_message
+        return response
     else:
         raise InvalidUsage('NOT ACCEPTABLE', 406)
 
@@ -40,8 +48,11 @@ def set_banner():
     string_params = dict(request.args)
     if len(string_params) != 1:
         raise InvalidUsage('NOT ACCEPTABLE', 406)
-    content_param = request.args.get(SET_BANNER_PARAM)
-    if content_param:
+    new_banner = request.args.get(SET_BANNER_PARAM)
+    if new_banner:
+        b = Banner(banner_message=new_banner)
+        db.session.add(b)
+        db.session.commit()
         return Response(status=200)
     else:
         raise InvalidUsage('NOT ACCEPTABLE', 406)
