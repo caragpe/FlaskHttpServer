@@ -79,5 +79,5 @@ responses to the `/echo` endpoint.
 - Create a test class for the Banner repository
 - Mock database in the command/service test classes
 - Refine correct naming/description of errors
-- Create a config file with constants used across the app
+- Update config file with constants used across the app
 - TBD
