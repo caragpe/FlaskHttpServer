@@ -2,7 +2,7 @@ from app import app, db
 from flask import request, jsonify, Response
 from app.errors import InvalidUsage
 from app.infrastructure.banner_repository import BannerRepository
-from app.services import echo_service
+from app.services.echo_service import EchoService
 
 
 @app.errorhandler(InvalidUsage)
@@ -14,26 +14,12 @@ def handle_invalid_usage(error):
 
 @app.route('/echo')
 def echo():
-    service = echo_service.EchoService(request)
+    service = EchoService(request)
     result = service.echo()
-    return result
-
-    # ECHO_MESSAGE_PARAM = 'message'
-    # if request.method != 'GET':
-    #     raise InvalidUsage('METHOD NOT ALLOWED', 405)
-    # string_params = dict(request.args)
-    # if len(string_params) != 1:
-    #     raise InvalidUsage('NOT ACCEPTABLE', 406)
-    # message = request.args.get(ECHO_MESSAGE_PARAM)
-    # if message:
-    #     repo = BannerRepository(db.session)
-    #     last_banner = repo.get_last_banner_message()
-    #     response = Response(message)
-    #     if last_banner:
-    #         response.headers['banner'] = last_banner
-    #     return response
-    # else:
-    #     raise InvalidUsage('NOT ACCEPTABLE', 406)
+    response = Response(result['message'])
+    if result['last_banner'] is not None:
+        response.headers['banner'] = result['last_banner']
+    return response
 
 
 @app.route('/set_banner', methods=['POST'])
