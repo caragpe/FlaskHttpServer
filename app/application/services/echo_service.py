@@ -1,6 +1,5 @@
-from flask import jsonify
 from app.infrastructure.banner_repository import BannerRepository
-from app import app, db
+from app import db
 from app.errors import InvalidUsage
 
 
@@ -26,10 +25,3 @@ class EchoService:
         string_params = dict(self.request.args)
         if len(string_params) != 1:
             raise InvalidUsage('NOT ACCEPTABLE', 406)
-
-
-    @app.errorhandler(InvalidUsage)
-    def handle_invalid_usage(self, error):
-        response = jsonify(error.to_dict())
-        response.status_code = error.status_code
-        return response
