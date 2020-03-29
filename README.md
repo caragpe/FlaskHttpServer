@@ -65,7 +65,7 @@ ALLOWED`
 - If the request is fine, the response should contain the message passed in the
 request.
 
-#### /setbanner endpoint
+#### /set_banner endpoint
 The `/setbanner` endpoint should accept a `POST` request with a single parameter `banner` in the `POST` body.
 - The request should be authenticated with a PIN code set in the headers. The correct pin is `3344` and header name is `admin-auth`
 - If authentication fails it should return: `403 METHOD NOT ALLOWED`
